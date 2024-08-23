@@ -23,5 +23,3 @@ limu vscode 插件
 
 **Enjoy!**
 
-
-https://qiu-weidong.github.io/2023/01/03/vscode/vscode-plugin/
