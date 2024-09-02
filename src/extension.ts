@@ -59,8 +59,8 @@ export function activate(context: vscode.ExtensionContext) {
 						if (!fs.existsSync(componentPath)) { // 不存在就下载
 							console.log('下载全局组件...');
 							let dest = '';
-							if(comp.substring(comp.lastIndexOf('.')) === 'vue') {
-								dest = path.join(src, './components',);
+							if (comp.substring(comp.lastIndexOf('.')) === '.vue') {
+								dest = path.join(src, './components');
 							} else {
 								dest = path.join(src, './components', `./${comp}`);
 							}
