@@ -17,4 +17,5 @@ yarn.lock
 .history
 remark.md
 pnpm-lock.yaml
+*.vsix
 

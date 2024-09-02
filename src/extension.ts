@@ -59,6 +59,12 @@ export function activate(context: vscode.ExtensionContext) {
 						const componentPath = path.resolve(src, './components', `./${comp}`);
 						if (!fs.existsSync(componentPath)) { // 不存在就下载
 							console.log('下载全局组件...');
+							let dest = '';
+							if(comp.substring(comp.lastIndexOf('.')) === 'vue') {
+								dest = path.join(src, './components',);
+							} else {
+								dest = path.join(src, './components', `./${comp}`);
+							}
 							await dgit(
 								{
 									owner: 'xlei1123',
@@ -66,7 +72,7 @@ export function activate(context: vscode.ExtensionContext) {
 									ref: 'main',
 									relativePath: `src/components/${comp}`,
 								},
-								path.join(src, './components', `./${comp}`),
+								dest
 							);
 						}
 					});
