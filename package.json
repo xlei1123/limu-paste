@@ -2,7 +2,7 @@
   "name": "limu-paste",
   "displayName": "limu-paste",
   "description": "快速复制粘贴源文件",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "leixiang",
   "engines": {
     "vscode": "^1.72.2"
