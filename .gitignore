@@ -19,3 +19,5 @@ remark.md
 pnpm-lock.yaml
 *.vsix
 
+*.vsix
+

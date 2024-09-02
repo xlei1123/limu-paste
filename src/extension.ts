@@ -49,7 +49,6 @@ export function activate(context: vscode.ExtensionContext) {
 				try {
 					let rootPath = path.resolve(destPath, '../');
 					let src = path.resolve(rootPath, './src');
-					console.log(rootPath, src);
 					while(!fs.existsSync(src)) {
 						rootPath = path.resolve(rootPath, '../');
 						src = path.resolve(rootPath, './src');
