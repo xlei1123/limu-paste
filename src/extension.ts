@@ -49,9 +49,14 @@ export function activate(context: vscode.ExtensionContext) {
 				try {
 					let rootPath = path.resolve(destPath, '../');
 					let src = path.resolve(rootPath, './src');
-					while(!fs.existsSync(src)) {
+					let findCount = 0;
+					while(!fs.existsSync(src) && findCount < 4) {
 						rootPath = path.resolve(rootPath, '../');
 						src = path.resolve(rootPath, './src');
+						findCount++;
+					}
+					if (!fs.existsSync(src)) {
+						vscode.window.showWarningMessage(`这似乎不是一个完整的项目工程，全局组件复制失败!!!`,  { modal: true });
 					}
 					// 找到components目录
 					clipboardPath.dependencies.forEach(async (comp:string) => {
