@@ -45,7 +45,7 @@
     "watch-tests": "tsc -p . -w --outDir out",
     "lint": "eslint src --ext ts",
     "test": "vscode-test",
-    "changelog": "conventional-changelog -p custom-config -i CHANGELOG.md -s -r 0  -n ./changelog-option.js"
+    "changelog": "conventional-changelog -p custom-config -i CHANGELOG.md -s -r 0"
   },
   "repository": {
     "type": "git",
