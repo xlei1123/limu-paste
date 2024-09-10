@@ -2,10 +2,11 @@
   "name": "limu-paste",
   "displayName": "limu-paste",
   "description": "快速复制粘贴源文件",
-  "version": "0.0.4",
+  "version": "0.0.5",
+  "type": "module",
   "publisher": "leixiang",
   "engines": {
-    "vscode": "^1.72.2"
+    "vscode": "^1.87.0"
   },
   "categories": [
     "Other"
@@ -47,15 +48,16 @@
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
     "lint": "eslint src --ext ts",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "start": "tsc"
   },
   "repository": {
-		"type": "git",
-		"url": "https://github.com:xlei1123/limu-paste"
-	},
-	"bugs": {
-		"url": "https://github.com/xlei1123/limu-paste/issues"
-	},
+    "type": "git",
+    "url": "https://github.com:xlei1123/limu-paste"
+  },
+  "bugs": {
+    "url": "https://github.com/xlei1123/limu-paste/issues"
+  },
   "devDependencies": {
     "@types/mocha": "^10.0.7",
     "@types/node": "20.x",
@@ -71,6 +73,8 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "@dking/dgit": "^0.0.12"
+    "@dking/dgit": "^0.0.12",
+    "node-polyfill-webpack-plugin": "^4.0.0",
+    "ts-node": "^10.9.2"
   }
 }

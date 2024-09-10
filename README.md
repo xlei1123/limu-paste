@@ -1,5 +1,8 @@
 # limu vscode 插件
 
+**使用前注意：** 
+1. 你的项目框架必须已经搭建完成，使用` vue3 + ts + element-plus `技术栈
+2. 能够科学上网
 
 ## Features
 

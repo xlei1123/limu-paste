@@ -1,9 +1,11 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
-import fs, { fstatSync } from 'node:fs';
+import vscode from 'vscode';
+import fs from 'node:fs';
 import path from 'node:path';
-import dgit from '@dking/dgit';
+import { lintAndFix } from './eslintFix';
+import { getAllFiles } from './util';
+// import dgit from '@dking/dgit';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -27,24 +29,27 @@ export function activate(context: vscode.ExtensionContext) {
 				if (stats.isDirectory()) { // 复制到当前目录下
 					destPath = path.resolve(filePath, clipboardPath.path.replace('\/', './'));
 				}
-
 				if (stats.isFile()) { // 复制到当前文件所在的文件夹
 					const dir = path.resolve(filePath, '..'); // 文件所在的文件夹
 					destPath = path.resolve(dir, clipboardPath.path.replace('\/', './'));
 				}
 				console.log('复制中...');
-				await dgit(
-					{
-						owner: 'xlei1123',
-						repoName: 'limu-ele-pro',
-						ref: 'main',
-						relativePath: `src/views${clipboardPath.path}`,
-					},
-					destPath,
-				);
+				// await dgit(
+				// 	{
+				// 		owner: 'xlei1123',
+				// 		repoName: 'limu-ele-pro',
+				// 		ref: 'main',
+				// 		relativePath: `src/views${clipboardPath.path}`,
+				// 	},
+				// 	destPath,
+				// 	{
+				// 		log: true, // 是否开启内部日志
+				// 	}
+				// );
+				const allFiles  = await getAllFiles(destPath);
+				lintAndFix(allFiles);
 				// 同时需要判断依赖组件是否已经复制
 				console.log('复制成功🚀');
-
 				// 复制dest中src目录 找到全局组件目录
 				try {
 					let rootPath = path.resolve(destPath, '../');
@@ -69,24 +74,29 @@ export function activate(context: vscode.ExtensionContext) {
 							} else {
 								dest = path.join(src, './components', `./${comp}`);
 							}
-							await dgit(
-								{
-									owner: 'xlei1123',
-									repoName: 'limu-ele-pro',
-									ref: 'main',
-									relativePath: `src/components/${comp}`,
-								},
-								dest
-							);
+							// await dgit(
+							// 	{
+							// 		owner: 'xlei1123',
+							// 		repoName: 'limu-ele-pro',
+							// 		ref: 'main',
+							// 		relativePath: `src/components/${comp}`,
+							// 	},
+							// 	dest,
+							// 	{
+							// 		log: true, // 是否开启内部日志
+							// 	}
+							// );
+							const allFiles  = await getAllFiles(dest);
+							lintAndFix(allFiles);
 						}
 					});
-
 				} catch (error) {
-					
+					vscode.window.showWarningMessage(`请重新复制页面，${error}!!!`,  { modal: true });
+					console.log(error);
 				}
-				
 			} catch (error) {
-				vscode.window.showWarningMessage(`请重新复制页面，${err}!!!`,  { modal: true });
+				vscode.window.showWarningMessage(`请重新复制页面，${error}!!!`,  { modal: true });
+				console.log('err===>', error);
 			}
 		});
 		
