@@ -3,7 +3,6 @@
   "displayName": "limu-paste",
   "description": "快速复制粘贴源文件",
   "version": "0.0.5",
-  "type": "module",
   "publisher": "leixiang",
   "engines": {
     "vscode": "^1.87.0"
@@ -39,17 +38,13 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "pnpm run package",
-    "vscode:package": "pnpm vsce package --no-dependencies",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
+    "build": "tsc",
+    "package": "pnpm vsce package --no-dependencies",
+    "watch": "tsc --watch",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
-    "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
     "lint": "eslint src --ext ts",
-    "test": "vscode-test",
-    "start": "tsc"
+    "test": "vscode-test"
   },
   "repository": {
     "type": "git",
@@ -59,6 +54,7 @@
     "url": "https://github.com/xlei1123/limu-paste/issues"
   },
   "devDependencies": {
+    "@types/eslint": "^9.6.1",
     "@types/mocha": "^10.0.7",
     "@types/node": "20.x",
     "@types/vscode": "^1.72.2",
@@ -67,14 +63,9 @@
     "@vscode/test-cli": "^0.0.9",
     "@vscode/test-electron": "^2.4.0",
     "eslint": "^8.57.0",
-    "ts-loader": "^9.5.1",
-    "typescript": "^5.4.5",
-    "webpack": "^5.92.1",
-    "webpack-cli": "^5.1.4"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@dking/dgit": "^0.0.12",
-    "node-polyfill-webpack-plugin": "^4.0.0",
-    "ts-node": "^10.9.2"
+    "@dking/dgit": "^0.0.12"
   }
 }

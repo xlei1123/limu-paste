@@ -3,7 +3,7 @@
 		"esm": true
 	},
 	"compilerOptions": {
-		"module": "ESNext",
+		"module": "CommonJS",
 		"target": "ESNext",
 		"moduleResolution": "node",
 		"sourceMap": true,
