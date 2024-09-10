@@ -19,14 +19,10 @@ export async function lintAndFix (filePaths: string[]) {
     return;  
   }
   const filePath = editor.document.uri.fsPath;
-  console.log('filePath====>', filePath);
   eslint = new ESLint({
     fix: true,
     ignore: true,
-    
-    // overrideConfigFile: 'c:/Users/98317/Desktop/my-app/.eslintrc1.js',
   });
-  console.log("filePaths===>", filePaths);
   const results = await eslint.lintFiles([...filePaths]);
   await ESLint.outputFixes(results);
   // 处理检查结果
