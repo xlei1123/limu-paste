@@ -1,8 +1,10 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
-import fs, { fstatSync } from 'node:fs';
+import vscode from 'vscode';
+import fs from 'node:fs';
 import path from 'node:path';
+import { lintAndFix } from './eslintFix';
+import { getAllFiles } from './util';
 import dgit from '@dking/dgit';
 
 // This method is called when your extension is activated
@@ -27,7 +29,6 @@ export function activate(context: vscode.ExtensionContext) {
 				if (stats.isDirectory()) { // 复制到当前目录下
 					destPath = path.resolve(filePath, clipboardPath.path.replace('\/', './'));
 				}
-
 				if (stats.isFile()) { // 复制到当前文件所在的文件夹
 					const dir = path.resolve(filePath, '..'); // 文件所在的文件夹
 					destPath = path.resolve(dir, clipboardPath.path.replace('\/', './'));
@@ -41,17 +42,26 @@ export function activate(context: vscode.ExtensionContext) {
 						relativePath: `src/views${clipboardPath.path}`,
 					},
 					destPath,
+					{
+						log: true, // 是否开启内部日志
+					}
 				);
+				const allFiles  = await getAllFiles(destPath);
+				lintAndFix(allFiles);
 				// 同时需要判断依赖组件是否已经复制
 				console.log('复制成功🚀');
-
 				// 复制dest中src目录 找到全局组件目录
 				try {
 					let rootPath = path.resolve(destPath, '../');
 					let src = path.resolve(rootPath, './src');
-					while(!fs.existsSync(src)) {
+					let findCount = 0;
+					while(!fs.existsSync(src) && findCount < 4) {
 						rootPath = path.resolve(rootPath, '../');
 						src = path.resolve(rootPath, './src');
+						findCount++;
+					}
+					if (!fs.existsSync(src)) {
+						vscode.window.showWarningMessage(`这似乎不是一个完整的项目工程，全局组件复制失败!!!`,  { modal: true });
 					}
 					// 找到components目录
 					clipboardPath.dependencies.forEach(async (comp:string) => {
@@ -71,17 +81,22 @@ export function activate(context: vscode.ExtensionContext) {
 									ref: 'main',
 									relativePath: `src/components/${comp}`,
 								},
-								dest
+								dest,
+								{
+									log: true, // 是否开启内部日志
+								}
 							);
+							const allFiles  = await getAllFiles(dest);
+							lintAndFix(allFiles);
 						}
 					});
-
 				} catch (error) {
-					
+					vscode.window.showWarningMessage(`请重新复制页面，${error}!!!`,  { modal: true });
+					console.log(error);
 				}
-				
 			} catch (error) {
-				vscode.window.showWarningMessage(`请重新复制页面，${err}!!!`,  { modal: true });
+				vscode.window.showWarningMessage(`请重新复制页面，${error}!!!`,  { modal: true });
+				console.log('err===>', error);
 			}
 		});
 		
