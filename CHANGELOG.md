@@ -4,6 +4,7 @@
 * feat: 改下载目录 ([c52cebe](https://github.com/xlei1123/limu-paste/commit/c52cebe))
 * feat: 更新readme ([f5540a8](https://github.com/xlei1123/limu-paste/commit/f5540a8))
 * feat: 日志自动生成 ([f421ec8](https://github.com/xlei1123/limu-paste/commit/f421ec8))
+* feat: 添加eslint 按照用户自己的配置规则走 ([a21a338](https://github.com/xlei1123/limu-paste/commit/a21a338))
 * feat: 网址更新 ([53e885b](https://github.com/xlei1123/limu-paste/commit/53e885b))
 * feat: 新增提交日志 ([5427a2e](https://github.com/xlei1123/limu-paste/commit/5427a2e))
 * feat: 寻找src目录向上寻找的次数 ([bcfcea1](https://github.com/xlei1123/limu-paste/commit/bcfcea1))
