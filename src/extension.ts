@@ -4,7 +4,7 @@ import vscode from 'vscode';
 import fs from 'node:fs';
 import path from 'node:path';
 import { lintAndFix } from './eslintFix';
-import { getAllFiles } from './util';
+import { getAllFiles, findUpFirstSrcPath, findRootPath } from './util';
 import dgit from '@dking/dgit';
 
 // This method is called when your extension is activated
@@ -13,11 +13,11 @@ export function activate(context: vscode.ExtensionContext) {
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "limu-vscode-extension" is now active!');
-
 	// 注册命令
 	let commandOfLimu = vscode.commands.registerCommand('limu-paste', async (uri) => {
 		// 文件路径
 		const filePath = uri.path.substring(1);
+		const rootPath = findRootPath(filePath);
 		let clipboardContent = await vscode.env.clipboard.readText();
 		fs.stat(filePath, async (err:any, stats:any) => {
 			if (err) {
@@ -47,21 +47,15 @@ export function activate(context: vscode.ExtensionContext) {
 					}
 				);
 				const allFiles  = await getAllFiles(destPath);
-				lintAndFix(allFiles);
+				lintAndFix(allFiles, rootPath);
 				// 同时需要判断依赖组件是否已经复制
 				console.log('复制成功🚀');
 				// 复制dest中src目录 找到全局组件目录
 				try {
-					let rootPath = path.resolve(destPath, '../');
-					let src = path.resolve(rootPath, './src');
-					let findCount = 0;
-					while(!fs.existsSync(src) && findCount < 4) {
-						rootPath = path.resolve(rootPath, '../');
-						src = path.resolve(rootPath, './src');
-						findCount++;
-					}
+					let src = findUpFirstSrcPath(destPath);
 					if (!fs.existsSync(src)) {
 						vscode.window.showWarningMessage(`这似乎不是一个完整的项目工程，全局组件复制失败!!!`,  { modal: true });
+						return;
 					}
 					// 找到components目录
 					clipboardPath.dependencies.forEach(async (comp:string) => {
@@ -87,7 +81,7 @@ export function activate(context: vscode.ExtensionContext) {
 								}
 							);
 							const allFiles  = await getAllFiles(dest);
-							lintAndFix(allFiles);
+							lintAndFix(allFiles, rootPath);
 						}
 					});
 				} catch (error) {
@@ -99,10 +93,6 @@ export function activate(context: vscode.ExtensionContext) {
 				console.log('err===>', error);
 			}
 		});
-		
-		const stats = fs.statSync(filePath);
-		console.log('stats', stats);
-		console.log('isFile', stats.isFile());
 	});
 
 	// 将命令放入其上下文对象中，使其生效

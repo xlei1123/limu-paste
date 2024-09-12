@@ -3,6 +3,7 @@
 * feat: 放弃webpack打包 直接tsc打包为esm模块 ([e080254](https://github.com/xlei1123/limu-paste/commit/e080254))
 * feat: 改下载目录 ([c52cebe](https://github.com/xlei1123/limu-paste/commit/c52cebe))
 * feat: 更新readme ([f5540a8](https://github.com/xlei1123/limu-paste/commit/f5540a8))
+* feat: 日志自动生成 ([f421ec8](https://github.com/xlei1123/limu-paste/commit/f421ec8))
 * feat: 网址更新 ([53e885b](https://github.com/xlei1123/limu-paste/commit/53e885b))
 * feat: 新增提交日志 ([5427a2e](https://github.com/xlei1123/limu-paste/commit/5427a2e))
 * feat: 寻找src目录向上寻找的次数 ([bcfcea1](https://github.com/xlei1123/limu-paste/commit/bcfcea1))

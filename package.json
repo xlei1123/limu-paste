@@ -2,7 +2,7 @@
   "name": "limu-paste",
   "displayName": "limu-paste",
   "description": "快速复制粘贴源文件",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "publisher": "leixiang",
   "engines": {
     "vscode": "^1.87.0"
@@ -38,11 +38,14 @@
     }
   },
   "scripts": {
-    "build": "tsc",
-    "package": "pnpm vsce package",
-    "watch": "tsc --watch",
-    "compile-tests": "tsc -p . --outDir out",
-    "watch-tests": "tsc -p . -w --outDir out",
+    "compile": "pnpm run check-types && node esbuild.js",
+    "check-types": "tsc --noEmit",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "vscode:prepublish": "pnpm run package",
+    "package": "pnpm run check-types && node esbuild.js --production",
+    "publish": "pnpm vsce package --no-dependencies",
     "lint": "eslint src --ext ts",
     "test": "vscode-test",
     "changelog": "conventional-changelog -p custom-config -i CHANGELOG.md -s -r 0"
@@ -67,13 +70,14 @@
     "conventional-changelog": "^6.0.0",
     "conventional-changelog-cli": "^5.0.0",
     "conventional-changelog-custom-config": "^0.3.1",
+    "esbuild": "^0.23.1",
+    "eslint": "8.57.0",
     "husky": "^9.1.5",
     "typescript": "^5.4.5"
   },
   "dependencies": {
     "@commitlint/cli": "^19.4.1",
     "@commitlint/config-conventional": "^19.4.1",
-    "@dking/dgit": "^0.0.12",
-    "eslint": "8.57.0"
+    "@dking/dgit": "^0.0.12"
   }
 }

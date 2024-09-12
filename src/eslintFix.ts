@@ -1,33 +1,23 @@
 import * as vscode from 'vscode';
-import { ESLint } from 'eslint';
+import { findEslint } from './util';
 import { log } from 'node:console';
+import { exec } from 'child_process';
 
-let eslint: ESLint;
-
-const rcs = [
-  'eslintrc.js',
-  'eslintrc.cjs',
-  'eslintrc.yaml',
-  'eslintrc.yml',
-  'eslintrc.json',
-  'package.json'
-];
-
-export async function lintAndFix (filePaths: string[]) {
-  const editor = vscode.window.activeTextEditor;  
-  if (!editor) {  
-    return;  
+export async function lintAndFix (filePaths: string[], rootPath: string) {
+  const editor = vscode.window.activeTextEditor;
+  if (!editor) {
+    return;
   }
-  const filePath = editor.document.uri.fsPath;
-  eslint = new ESLint({
-    fix: true,
-    ignore: true,
+  const command = await findEslint(rootPath);
+  const args = ['--fix', ...filePaths];
+  exec(`${command} ${args.join(' ')}`, {cwd: rootPath}, (error, stdout, stderr) => {  
+    if (error) {
+      console.error(`exec error: ${error}`);
+    }
+    if (stderr) {
+      console.error(`stderr: ${stderr}`);
+    }
+    console.log(`stderr: ${stderr}`);
   });
-  const results = await eslint.lintFiles([...filePaths]);
-  await ESLint.outputFixes(results);
-  // 处理检查结果
-  const formatter = await eslint.loadFormatter("stylish");
-  let data: any;
-  const resultText = formatter.format(results, data);
-  log(resultText);
+  log('ok');
 }
