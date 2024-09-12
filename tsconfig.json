@@ -1,7 +1,4 @@
 {
-	"ts-node": {
-		"esm": true
-	},
 	"compilerOptions": {
 		"module": "CommonJS",
 		"target": "ESNext",
@@ -9,6 +6,7 @@
 		"sourceMap": true,
 		"rootDir": "src",
 		"strict": true,   /* enable all strict type-checking options */
+		"skipLibCheck": true,
 		"esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
 		"outDir": "./dist"
