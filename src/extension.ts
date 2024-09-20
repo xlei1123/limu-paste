@@ -58,32 +58,34 @@ export function activate(context: vscode.ExtensionContext) {
 						return;
 					}
 					// 找到components目录
-					clipboardPath.dependencies.forEach(async (comp:string) => {
-						const componentPath = path.resolve(src, './components', `./${comp}`);
-						if (!fs.existsSync(componentPath)) { // 不存在就下载
-							console.log('下载全局组件...');
-							let dest = '';
-							if (comp.substring(comp.lastIndexOf('.')) === '.vue') {
-								dest = path.join(src, './components');
-							} else {
-								dest = path.join(src, './components', `./${comp}`);
-							}
-							await dgit(
-								{
-									owner: 'xlei1123',
-									repoName: 'limu-ele-pro',
-									ref: 'main',
-									relativePath: `src/components/${comp}`,
-								},
-								dest,
-								{
-									log: true, // 是否开启内部日志
+					if(clipboardPath.dependencies && Array.isArray(clipboardPath.dependencies)) {
+						clipboardPath.dependencies.forEach(async (comp:string) => {
+							const componentPath = path.resolve(src, './components', `./${comp}`);
+							if (!fs.existsSync(componentPath)) { // 不存在就下载
+								console.log('下载全局组件...');
+								let dest = '';
+								if (comp.substring(comp.lastIndexOf('.')) === '.vue') {
+									dest = path.join(src, './components');
+								} else {
+									dest = path.join(src, './components', `./${comp}`);
 								}
-							);
-							const allFiles  = await getAllFiles(dest);
-							lintAndFix(allFiles, rootPath);
-						}
-					});
+								await dgit(
+									{
+										owner: 'xlei1123',
+										repoName: 'limu-ele-pro',
+										ref: 'main',
+										relativePath: `src/components/${comp}`,
+									},
+									dest,
+									{
+										log: true, // 是否开启内部日志
+									}
+								);
+								const allFiles  = await getAllFiles(dest);
+								lintAndFix(allFiles, rootPath);
+							}
+						});
+					}
 				} catch (error) {
 					vscode.window.showWarningMessage(`请重新复制页面，${error}!!!`,  { modal: true });
 					console.log(error);
