@@ -1,8 +1,8 @@
 {
   "name": "limu-paste",
   "displayName": "limu-paste",
-  "description": "快速复制粘贴源文件",
-  "version": "0.0.6",
+  "description": "Quickly copy and paste source files",
+  "version": "0.0.8",
   "publisher": "leixiang",
   "engines": {
     "vscode": "^1.87.0"
@@ -78,6 +78,6 @@
   "dependencies": {
     "@commitlint/cli": "^19.4.1",
     "@commitlint/config-conventional": "^19.4.1",
-    "@dking/dgit": "^0.0.12"
+    "@limu-x/dgit": "^0.0.1"
   }
 }
