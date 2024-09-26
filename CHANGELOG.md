@@ -1,5 +1,6 @@
 ## <small>0.0.8 (2024-09-26)</small>
 
+* feat: @limu-x/dgit 通过gitee下载 ([7da700f](https://github.com/xlei1123/limu-paste/commit/7da700f))
 * feat: 0.0.7 ([c9ce5e3](https://github.com/xlei1123/limu-paste/commit/c9ce5e3))
 * feat: 版本更新 ([6c18220](https://github.com/xlei1123/limu-paste/commit/6c18220))
 * feat: 放弃webpack打包 直接tsc打包为esm模块 ([e080254](https://github.com/xlei1123/limu-paste/commit/e080254))
