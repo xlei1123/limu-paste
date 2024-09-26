@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { lintAndFix } from './eslintFix';
 import { getAllFiles, findUpFirstSrcPath, findRootPath } from './util';
-import dgit from '@dking/dgit';
+import dgit from '@limu-x/dgit';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -40,6 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
 						repoName: 'limu-ele-pro',
 						ref: 'main',
 						relativePath: `src/views${clipboardPath.path}`,
+						gitType: 'gitee',
 					},
 					destPath,
 					{
@@ -75,6 +76,7 @@ export function activate(context: vscode.ExtensionContext) {
 										repoName: 'limu-ele-pro',
 										ref: 'main',
 										relativePath: `src/components/${comp}`,
+										gitType: 'gitee',
 									},
 									dest,
 									{
