@@ -49,7 +49,7 @@
     "publish": "pnpm vsce package --no-dependencies",
     "lint": "eslint src --ext ts",
     "test": "vscode-test",
-    "changelog": "conventional-changelog -p custom-config -i CHANGELOG.md -s -r 0"
+    "changelog": "conventional-changelog -p custom-config -i CHANGELOG.md -s"
   },
   "repository": {
     "type": "git",
