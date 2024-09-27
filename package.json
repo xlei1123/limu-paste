@@ -2,8 +2,9 @@
   "name": "limu-paste",
   "displayName": "limu-paste",
   "description": "Quickly copy and paste source files",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "publisher": "leixiang",
+  "icon": "logo.png",
   "engines": {
     "vscode": "^1.87.0"
   },
