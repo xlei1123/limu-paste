@@ -24,9 +24,15 @@
     }
   },
   "git": {
-    "commitMessage": "chore: Release v${version}"
+    "commitMessage": "release: v${version}"
   },
   "github": {
     "release": true
+  },
+  "npm": {
+    "publish": false
+  },
+  "hooks": {
+    "after:bump": "echo 更新版本成功"
   }
 }
