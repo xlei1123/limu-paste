@@ -2,8 +2,9 @@
   "name": "limu-paste",
   "displayName": "limu-paste",
   "description": "Quickly copy and paste source files",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "publisher": "leixiang",
+  "icon": "logo.png",
   "engines": {
     "vscode": "^1.87.0"
   },
@@ -48,7 +49,8 @@
     "publish": "pnpm vsce package --no-dependencies",
     "lint": "eslint src --ext ts",
     "test": "vscode-test",
-    "changelog": "conventional-changelog -p custom-config -i CHANGELOG.md -s -r 0"
+    "release": "release-it",
+    "changelog": "conventional-changelog -p custom-config -i CHANGELOG.md -s"
   },
   "repository": {
     "type": "git",
@@ -58,6 +60,7 @@
     "url": "https://github.com/xlei1123/limu-paste/issues"
   },
   "devDependencies": {
+    "@release-it/conventional-changelog": "^8.0.2",
     "@types/eslint": "^9.6.1",
     "@types/mocha": "^10.0.7",
     "@types/node": "20.x",
@@ -73,6 +76,7 @@
     "esbuild": "^0.23.1",
     "eslint": "8.57.0",
     "husky": "^9.1.5",
+    "release-it": "^17.6.0",
     "typescript": "^5.4.5"
   },
   "dependencies": {
